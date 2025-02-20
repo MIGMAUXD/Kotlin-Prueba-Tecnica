@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnSalida: Button
     lateinit var btnClear: Button
     lateinit var textViewSaludo: TextView
+    lateinit var btnBtn1 : Button
+    lateinit var btnBtn2 : Button
 
 
 
@@ -39,9 +41,14 @@ class MainActivity : AppCompatActivity() {
         btnSalida = findViewById(R.id.salida)
         btnClear = findViewById(R.id.limpiar)
         textViewSaludo = findViewById(R.id.saludo)
+        btnBtn1 = findViewById(R.id.btn1)
+        btnBtn2 = findViewById(R.id.btn2)
 
         btnSalida.isEnabled = false
         btnClear.isEnabled = false
+        btnBtn1.isEnabled = btnBtn1.text == "On"
+        btnBtn2.isEnabled = btnBtn2.text == "On"
+
 
         fun verificarCampos() {
             val nombre = editTextNombre.text.toString()
@@ -53,6 +60,26 @@ class MainActivity : AppCompatActivity() {
             val saludo = textViewSaludo.text.toString()
             btnClear.isEnabled = saludo.isNotEmpty()
         }
+
+        fun cambiarTextBtn(btnBtn1:Button , btnBtn2:Button){
+
+            val btnSave = btnBtn1.text
+            this.btnBtn1.setText(btnBtn2.text)
+            this.btnBtn2.setText(btnSave)
+
+            val isBtn1Enabled = btnBtn1.isEnabled
+            btnBtn1.isEnabled = btnBtn2.isEnabled
+            btnBtn2.isEnabled = isBtn1Enabled
+
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -72,6 +99,13 @@ class MainActivity : AppCompatActivity() {
         editTextNombre.addTextChangedListener(textWatcher)
         editTextApellido.addTextChangedListener(textWatcher)
         textViewSaludo.addTextChangedListener(textWatcher)
+
+        btnBtn1.setOnClickListener(){
+            cambiarTextBtn(btnBtn1, btnBtn2)
+        }
+        btnBtn2.setOnClickListener(){
+            cambiarTextBtn(btnBtn1, btnBtn2)
+        }
 
         btnSalida.setOnClickListener() {
             val nombre = editTextNombre.text.toString()
